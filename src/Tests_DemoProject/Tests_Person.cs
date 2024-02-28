@@ -1,9 +1,9 @@
 namespace Tests_DemoProject;
 using DemoProject;
-public class UnitTest1
+public class Tests_Person
 {
     [Fact]
-    public void Test1()
+    public void Test_SingASong()
     {
         // Arrange
         Person person = new Person();
