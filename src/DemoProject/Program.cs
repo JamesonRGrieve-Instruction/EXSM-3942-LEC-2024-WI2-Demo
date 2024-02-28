@@ -5,9 +5,6 @@ class Program
     static void Main(string[] args)
     {
         Person person = new Person();
-        person.FirstName = "John";
-        person.MiddleName = "Test";
-        person.LastName = "Doe";
         // We cannot assign to derived properties as they are read-only (unless a setter is implemented).
         //person.FullName = "Test McTest";
         Console.WriteLine($"Person: {person.FirstName} {person.MiddleName} {person.LastName}");
@@ -18,6 +15,18 @@ class Program
 }
 public class Person
 {
+    public Person()
+    {
+        this.FirstName = "John";
+        this.MiddleName = "Test";
+        this.LastName = "Doe";
+    }
+    public Person(string firstName, string middleName, string lastName)
+    {
+        this.FirstName = firstName;
+        this.MiddleName = middleName;
+        this.LastName = lastName;
+    }
     public string? FirstName;
     private string? _middleName;
     public string? MiddleName
