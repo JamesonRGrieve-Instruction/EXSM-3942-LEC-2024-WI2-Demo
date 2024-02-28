@@ -12,6 +12,7 @@ class Program
         //person.FullName = "Test McTest";
         Console.WriteLine($"Person: {person.FirstName} {person.MiddleName} {person.LastName}");
         Console.WriteLine($"Full Name: {person.FullName}");
+        Console.WriteLine(person.SingASong());
         Console.WriteLine("Program end...");
     }
 }
@@ -41,5 +42,8 @@ public class Person
             return $"{this.FirstName} {this.MiddleName} {this.LastName}";
         }
     }
-
+    public string SingASong()
+    {
+        return $"Happy Birthday to you, Happy Birthday to you, Happy Birthday dear {this.FirstName}... Happy Birthday to you.";
+    }
 }
