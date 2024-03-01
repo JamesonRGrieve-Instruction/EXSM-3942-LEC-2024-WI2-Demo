@@ -4,12 +4,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        Vehicle myVehicle = new Vehicle("Ford", "F-150", 2010);
-        Console.WriteLine(myVehicle.ToString());
+        Vehicle myVehicle = new Truck("Ford", "F-150", 2010);
+        Console.WriteLine(myVehicle);
         Console.WriteLine("Program end...");
     }
 }
-public class Vehicle
+public abstract class Vehicle
 {
     public Vehicle(string manufacturer, string model, int year)
     {
@@ -45,4 +45,30 @@ public class Vehicle
     {
         return $"A {this.Year} {this.Manufacturer} {this.Model}.";
     }
+}
+public abstract class RoadVehicle : Vehicle
+{
+    public RoadVehicle(string manufacturer, string model, int year, float engineSize) : base(manufacturer, model, year)
+    {
+        this.EngineSize = engineSize;
+    }
+    public float EngineSize { get; set; }
+}
+public class Car : RoadVehicle
+{
+    public Car(string manufacturer, string model, int year, float engineSize, float trunkSize) : base(manufacturer, model, year, engineSize)
+    {
+        this.TrunkSize = trunkSize;
+    }
+    public float TrunkSize { get; set; }
+
+}
+public class Truck : RoadVehicle
+{
+    public Truck(string manufacturer, string model, int year, float engineSize, float bedLength) : base(manufacturer, model, year, engineSize)
+    {
+        this.BedLength = bedLength;
+    }
+    public float BedLength { get; set; }
+
 }
