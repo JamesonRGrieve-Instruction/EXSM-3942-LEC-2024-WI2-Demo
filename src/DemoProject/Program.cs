@@ -4,8 +4,22 @@ class Program
 {
     static void Main(string[] args)
     {
-        Vehicle myVehicle = new Truck("Ford", "F-150", 2010);
-        Console.WriteLine(myVehicle);
+        Truck myTruck = new Truck("Ford", "F-150", 2010, 3.0f, 182f);
+        Console.WriteLine(myTruck);
+        Console.WriteLine(myTruck.BedLength);
+        Car myCar = new Car("Mitsubishi", "GTO", 1991, 3.0f, 210f);
+        Console.WriteLine(myCar);
+        Console.WriteLine(myCar.TrunkSize);
+
+        List<Vehicle> vehicles = new List<Vehicle>() {
+            myTruck,
+            myCar
+        };
+
+        foreach (Vehicle vehicle in vehicles)
+        {
+            Console.WriteLine(vehicle);
+        }
         Console.WriteLine("Program end...");
     }
 }
@@ -61,7 +75,10 @@ public class Car : RoadVehicle
         this.TrunkSize = trunkSize;
     }
     public float TrunkSize { get; set; }
-
+    public override string ToString()
+    {
+        return base.ToString() + $" It has a {this.EngineSize}L engine and a {this.TrunkSize} cubic cm trunk.";
+    }
 }
 public class Truck : RoadVehicle
 {
@@ -71,4 +88,8 @@ public class Truck : RoadVehicle
     }
     public float BedLength { get; set; }
 
+    public override string ToString()
+    {
+        return base.ToString() + $" It has a {this.EngineSize}L engine and a {this.BedLength}cm bed.";
+    }
 }
