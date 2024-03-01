@@ -4,55 +4,49 @@ class Program
 {
     static void Main(string[] args)
     {
-        Person person = new Person();
-        // We cannot assign to derived properties as they are read-only (unless a setter is implemented).
-        //person.FullName = "Test McTest";
-        Console.WriteLine($"Person: {person.FirstName} {person.MiddleName} {person.LastName}");
-        Console.WriteLine($"Full Name: {person.FullName}");
-        Console.WriteLine(person.SingASong());
-        Console.WriteLine("Program end...");
+        Pen pen = new Pen("Bic", "Blue");
+        pen.Write(100);
+        pen.Write(42);
+        pen.Write(200);
+        Console.WriteLine($"The pen has ${pen.InkLevel}% ink remaining.");
     }
 }
-public class Person
+public class Pen
 {
-    public Person()
+    public Pen(string brand, string colour)
     {
-        this.FirstName = "John";
-        this.MiddleName = "Test";
-        this.LastName = "Doe";
+        this.Brand = brand;
+        this.Colour = colour;
+        this.InkLevel = 100f;
     }
-    public Person(string firstName, string middleName, string lastName)
-    {
-        this.FirstName = firstName;
-        this.MiddleName = middleName;
-        this.LastName = lastName;
-    }
-    public string? FirstName;
-    private string? _middleName;
-    public string? MiddleName
+    public string Brand { get; set; }
+    public string Colour { get; set; }
+    private float _inkLevel;
+    public float InkLevel
     {
         get
         {
-            return _middleName;
+            return _inkLevel;
         }
-        set
+        private set
         {
-            _middleName = value;
+            if (value < 0)
+            {
+                throw new Exception("InkLevel cannot be set to a negative value.");
+            }
+            this._inkLevel = value;
         }
     }
-    public string? LastName
+
+    public void Write(int characters)
     {
-        get; set;
-    }
-    public string FullName
-    {
-        get
+        try
         {
-            return $"{this.FirstName} {this.MiddleName} {this.LastName}";
+            InkLevel -= characters * 0.5f;
         }
-    }
-    public string SingASong()
-    {
-        return $"Happy Birthday to you, Happy Birthday to you, Happy Birthday dear {this.FirstName}... Happy Birthday to you.";
+        catch (Exception exception)
+        {
+            Console.WriteLine($"ERROR: {exception.Message}");
+        }
     }
 }
