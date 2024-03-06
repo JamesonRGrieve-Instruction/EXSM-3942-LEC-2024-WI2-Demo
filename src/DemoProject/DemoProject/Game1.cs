@@ -7,6 +7,8 @@ namespace DemoProject;
 public class Game1 : Game
 {
     Texture2D ballTexture;
+    float ballSpeed;
+    Vector2 ballPosition;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -21,7 +23,8 @@ public class Game1 : Game
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
-
+        ballSpeed = 100f;
+        ballPosition = new Vector2(0, 0);
         base.Initialize();
     }
 
@@ -34,10 +37,27 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+        KeyboardState keyboardState = Keyboard.GetState();
+
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        if (keyboardState.IsKeyDown(Keys.Up))
+        {
+            ballPosition.Y -= ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+        if (keyboardState.IsKeyDown(Keys.Down))
+        {
+            ballPosition.Y += ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+        if (keyboardState.IsKeyDown(Keys.Left))
+        {
+            ballPosition.X -= ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+        if (keyboardState.IsKeyDown(Keys.Right))
+        {
+            ballPosition.X += ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
 
         base.Update(gameTime);
     }
@@ -47,7 +67,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
-        _spriteBatch.Draw(ballTexture, new Vector2(0, 0), Color.White);
+        _spriteBatch.Draw(ballTexture, ballPosition, Color.White);
         _spriteBatch.End();
 
         base.Draw(gameTime);
