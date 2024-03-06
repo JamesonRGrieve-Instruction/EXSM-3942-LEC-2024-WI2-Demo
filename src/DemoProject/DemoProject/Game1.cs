@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -6,13 +7,12 @@ namespace DemoProject;
 
 public class Game1 : Game
 {
-    Texture2D ballTexture;
-    float ballSpeed;
-    Vector2 ballPosition;
+    List<GameObject> gameObjects;
+
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
+    Player player;
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -22,9 +22,11 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-        ballSpeed = 100f;
-        ballPosition = new Vector2(0, 0);
+        player = new Player();
+        gameObjects = new List<GameObject>() {
+            player
+        };
+
         base.Initialize();
     }
 
@@ -32,7 +34,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        ballTexture = Content.Load<Texture2D>("SoccerBall");
+        player.ballTexture = Content.Load<Texture2D>("SoccerBall");
     }
 
     protected override void Update(GameTime gameTime)
@@ -42,23 +44,11 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Escape))
             Exit();
 
-        if (keyboardState.IsKeyDown(Keys.Up))
-        {
-            ballPosition.Y -= ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-        if (keyboardState.IsKeyDown(Keys.Down))
-        {
-            ballPosition.Y += ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-        if (keyboardState.IsKeyDown(Keys.Left))
-        {
-            ballPosition.X -= ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-        if (keyboardState.IsKeyDown(Keys.Right))
-        {
-            ballPosition.X += ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
 
+        foreach (GameObject gameObject in gameObjects)
+        {
+            gameObject.Update(gameTime, keyboardState);
+        }
         base.Update(gameTime);
     }
 
@@ -67,9 +57,11 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
-        _spriteBatch.Draw(ballTexture, ballPosition, Color.White);
+        foreach (GameObject gameObject in gameObjects)
+        {
+            gameObject.Draw(gameTime, _spriteBatch);
+        }
         _spriteBatch.End();
-
         base.Draw(gameTime);
     }
 }
