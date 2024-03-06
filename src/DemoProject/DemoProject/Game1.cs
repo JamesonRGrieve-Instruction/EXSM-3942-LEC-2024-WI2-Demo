@@ -24,7 +24,10 @@ public class Game1 : Game
     {
         player = new Player();
         gameObjects = new List<GameObject>() {
-            player
+            player,
+            new SoccerGoal(new Point(100, 300)),
+            new SoccerGoal(new Point(400, 250)),
+            new SoccerGoal(new Point(330, 100)),
         };
 
         base.Initialize();
@@ -33,8 +36,10 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        player.ballTexture = Content.Load<Texture2D>("SoccerBall");
+        foreach (GameObject gameObject in gameObjects)
+        {
+            gameObject.ObjectTexture = Content.Load<Texture2D>(gameObject.ObjectTextureName);
+        }
     }
 
     protected override void Update(GameTime gameTime)
