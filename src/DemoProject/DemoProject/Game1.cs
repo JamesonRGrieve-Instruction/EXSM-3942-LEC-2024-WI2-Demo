@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -8,8 +9,6 @@ namespace DemoProject;
 public class Game1 : Game
 {
     List<GameObject> gameObjects;
-
-
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     Player player;
@@ -52,8 +51,22 @@ public class Game1 : Game
 
         foreach (GameObject gameObject in gameObjects)
         {
+            foreach (GameObject potentialCollision in gameObjects)
+            {
+                if (gameObject != potentialCollision)
+                {
+                    if (gameObject.ObjectBoundingBox.Left < potentialCollision.ObjectBoundingBox.Right &&
+                    gameObject.ObjectBoundingBox.Right > potentialCollision.ObjectBoundingBox.Left &&
+                    gameObject.ObjectBoundingBox.Top < potentialCollision.ObjectBoundingBox.Bottom &&
+                    gameObject.ObjectBoundingBox.Bottom > potentialCollision.ObjectBoundingBox.Top)
+                    {
+                        gameObject.OnCollision(potentialCollision);
+                    }
+                }
+            }
             gameObject.Update(gameTime, keyboardState);
         }
+        gameObjects = gameObjects.Where(gameObject => !gameObject.Destroy).ToList();
         base.Update(gameTime);
     }
 

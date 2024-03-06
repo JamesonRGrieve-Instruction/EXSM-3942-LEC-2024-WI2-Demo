@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -31,5 +32,10 @@ public class Player : GameObject
     public override void Draw(GameTime gameTime, SpriteBatch _spriteBatch)
     {
         _spriteBatch.Draw(ObjectTexture, ObjectBoundingBox, Color.White);
+    }
+
+    public override void OnCollision(GameObject with)
+    {
+        with.Destroy = true;
     }
 }
