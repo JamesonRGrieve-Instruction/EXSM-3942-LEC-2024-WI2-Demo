@@ -19,4 +19,12 @@ public class Projectile : GameObject
     {
         _spriteBatch.Draw(ObjectTexture, ObjectBoundingBox, Color.White);
     }
+    public override void OnCollision(GameObject with)
+    {
+        if (with.GetType() == typeof(SoccerGoal))
+        {
+            this.Destroy = true;
+            with.Destroy = true;
+        }
+    }
 }
