@@ -13,6 +13,8 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     Player player;
+    float fireTimer;
+    float lastFire;
     static Random rng = new Random();
     public Game1()
     {
@@ -39,7 +41,7 @@ public class Game1 : Game
             SpawnGoal(),
             SpawnGoal()
         };
-
+        fireTimer = 1f;
         base.Initialize();
     }
 
@@ -77,8 +79,9 @@ public class Game1 : Game
             }
             gameObject.Update(gameTime, keyboardState);
         }
-        if (keyboardState.IsKeyDown(Keys.Space))
+        if (keyboardState.IsKeyDown(Keys.Space) && gameTime.TotalGameTime.TotalSeconds - lastFire > fireTimer)
         {
+            lastFire = (float)gameTime.TotalGameTime.TotalSeconds;
             Projectile newProjectile = new Projectile(new Point(player.ObjectBoundingBox.Center.X, player.ObjectBoundingBox.Center.Y), player.movement);
             newProjectile.ObjectTexture = Content.Load<Texture2D>(newProjectile.ObjectTextureName);
             gameObjects.Add(newProjectile);
