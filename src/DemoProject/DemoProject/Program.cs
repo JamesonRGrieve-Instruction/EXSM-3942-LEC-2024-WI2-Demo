@@ -1,3 +1,3 @@
 ﻿
-using var game = new DemoProject.Game1();
+using var game = new DemoProject.SoccerGame();
 game.Run();

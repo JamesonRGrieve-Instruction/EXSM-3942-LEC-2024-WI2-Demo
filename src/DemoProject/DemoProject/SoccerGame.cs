@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DemoProject;
 
-public class Game1 : Game
+public class SoccerGame : Game
 {
     List<GameObject> gameObjects;
     private GraphicsDeviceManager _graphics;
@@ -16,7 +16,7 @@ public class Game1 : Game
     float fireTimer;
     float lastFire;
     static Random rng = new Random();
-    public Game1()
+    public SoccerGame()
     {
         _graphics = new GraphicsDeviceManager(this);
         _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
