@@ -6,7 +6,10 @@ public class Player : GameObject
 {
     float ballSpeed;
 
-    public Player() : base("SoccerBall", new Point(0, 0), new Point(100, 100))
+    public Player() : base("SoccerBall", new Point(
+        (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2) - 50,
+        (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2) - 50
+    ), new Point(100, 100))
     {
         ballSpeed = 200f;
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,25 +10,39 @@ namespace DemoProject;
 public class Game1 : Game
 {
     List<GameObject> gameObjects;
+    List<GameObject> targets;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     Player player;
+    static Random rng = new Random();
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
+        _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
+    protected SoccerGoal SpawnGoal()
+    {
+        int x = rng.Next(0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width);
+        int y = rng.Next(0, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
 
+        return new SoccerGoal(new Point(x, y));
+    }
     protected override void Initialize()
     {
         player = new Player();
+        targets = new List<GameObject>() {
+            SpawnGoal(),
+            SpawnGoal(),
+            SpawnGoal()
+        };
         gameObjects = new List<GameObject>() {
             player,
-            new SoccerGoal(new Point(100, 300)),
-            new SoccerGoal(new Point(400, 250)),
-            new SoccerGoal(new Point(330, 100)),
         };
+        gameObjects.AddRange(targets);
 
         base.Initialize();
     }
@@ -67,6 +82,14 @@ public class Game1 : Game
             gameObject.Update(gameTime, keyboardState);
         }
         gameObjects = gameObjects.Where(gameObject => !gameObject.Destroy).ToList();
+        targets = targets.Where(gameObject => !gameObject.Destroy).ToList();
+        while (targets.Count < 3)
+        {
+            SoccerGoal newSoccerGoal = SpawnGoal();
+            newSoccerGoal.ObjectTexture = Content.Load<Texture2D>(newSoccerGoal.ObjectTextureName);
+            targets.Add(newSoccerGoal);
+            gameObjects.Add(newSoccerGoal);
+        }
         base.Update(gameTime);
     }
 
