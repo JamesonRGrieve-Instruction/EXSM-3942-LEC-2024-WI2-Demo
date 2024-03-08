@@ -8,7 +8,7 @@ public class Player : GameObject
 
     public Player() : base("SoccerBall", new Point(0, 0), new Point(100, 100))
     {
-        ballSpeed = 100f;
+        ballSpeed = 200f;
     }
     public override void Update(GameTime gameTime, KeyboardState keyboardState)
     {
