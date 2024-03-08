@@ -79,7 +79,7 @@ public class Game1 : Game
         }
         if (keyboardState.IsKeyDown(Keys.Space))
         {
-            Projectile newProjectile = new Projectile(new Point(player.ObjectBoundingBox.X, player.ObjectBoundingBox.Y), player.movement);
+            Projectile newProjectile = new Projectile(new Point(player.ObjectBoundingBox.Center.X, player.ObjectBoundingBox.Center.Y), player.movement);
             newProjectile.ObjectTexture = Content.Load<Texture2D>(newProjectile.ObjectTextureName);
             gameObjects.Add(newProjectile);
 

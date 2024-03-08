@@ -15,25 +15,31 @@ public class Player : GameObject
     }
     public override void Update(GameTime gameTime, KeyboardState keyboardState)
     {
-        movement = new Vector2(0, 0);
+        Vector2 newMovement = new Vector2(0, 0);
         if (keyboardState.IsKeyDown(Keys.Up))
         {
-            movement.Y -= 1;
+            newMovement.Y -= 1;
         }
         if (keyboardState.IsKeyDown(Keys.Down))
         {
-            movement.Y += 1;
+            newMovement.Y += 1;
         }
         if (keyboardState.IsKeyDown(Keys.Left))
         {
-            movement.X -= 1;
+            newMovement.X -= 1;
         }
         if (keyboardState.IsKeyDown(Keys.Right))
         {
-            movement.X += 1;
+            newMovement.X += 1;
         }
-        ObjectBoundingBox.Y += (int)(movement.Y * ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-        ObjectBoundingBox.X += (int)(movement.X * ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+        if (newMovement.X != 0 || newMovement.Y != 0)
+        {
+            movement = newMovement;
+        }
+        ObjectBoundingBox.Y += (int)(newMovement.Y * ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+        ObjectBoundingBox.X += (int)(newMovement.X * ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+
+
     }
     public override void Draw(GameTime gameTime, SpriteBatch _spriteBatch)
     {
