@@ -77,6 +77,13 @@ public class Game1 : Game
             }
             gameObject.Update(gameTime, keyboardState);
         }
+        if (keyboardState.IsKeyDown(Keys.Space))
+        {
+            Projectile newProjectile = new Projectile(new Point(player.ObjectBoundingBox.X, player.ObjectBoundingBox.Y), player.movement);
+            newProjectile.ObjectTexture = Content.Load<Texture2D>(newProjectile.ObjectTextureName);
+            gameObjects.Add(newProjectile);
+
+        }
         gameObjects = gameObjects.Where(gameObject => !gameObject.Destroy).ToList();
         while (gameObjects.Count(gameObject => gameObject.GetType() == typeof(SoccerGoal)) < 3)
         {
