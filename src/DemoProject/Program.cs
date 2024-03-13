@@ -30,7 +30,7 @@ class PokeDTO
     public int ID { get; set; }
     [JsonPropertyName("name")]
     public string Name { get; set; }
-    [JsonPropertyName("types")]
+    [JsonPropertyName("types[]")]
     public string[] Types { get; set; }
     [JsonPropertyName("height")]
     public int Height { get; set; }
