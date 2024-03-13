@@ -7,7 +7,10 @@ namespace DemoProject;
 
 class Program
 {
-    static readonly HttpClient client = new HttpClient();
+    static readonly HttpClient client = new HttpClient()
+    {
+        Timeout = TimeSpan.FromSeconds(5)
+    };
     static async Task Main(string[] args)
     {
         List<PokeDTO> cachedPokemon = new List<PokeDTO>();
