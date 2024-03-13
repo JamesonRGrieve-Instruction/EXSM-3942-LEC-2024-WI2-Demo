@@ -1,35 +1,39 @@
-﻿namespace DemoProject;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace DemoProject;
+
+
 
 class Program
 {
+    static readonly HttpClient client = new HttpClient();
     static async Task Main(string[] args)
     {
-        Queue<Func<int, Task<int>>> tasks = new Queue<Func<int, Task<int>>>();
-        for (int i = 1; i <= 10; i++)
-        {
-            tasks.Enqueue(WaitForSecondsAsync);
-        }
-
-        Task[] workers = {
-            CreateWorker(tasks),
-            CreateWorker(tasks),
-            CreateWorker(tasks),
-        };
-        Task.WaitAll(workers);
+        Console.Write("Please enter a Pokemon ID: ");
+        int pokemonID = int.Parse(Console.ReadLine());
+        PokeDTO found = await FetchPokemon(pokemonID);
+        Console.WriteLine(found.Name);
     }
-    static async Task CreateWorker(Queue<Func<int, Task<int>>> taskQueue)
+    static async Task<PokeDTO> FetchPokemon(int id)
     {
-        while (taskQueue.Count > 0)
-        {
-            await taskQueue.Dequeue()(1);
-        }
+        HttpResponseMessage response = await client.GetAsync($"https://pokeapi.co/api/v2/pokemon/{id}");
+        response.EnsureSuccessStatusCode();
+        string responseText = await response.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<PokeDTO>(responseText);
+    }
 
-    }
-    static async Task<int> WaitForSecondsAsync(int seconds)
-    {
-        Console.WriteLine($"Waiting for {seconds} seconds.");
-        await Task.Delay(seconds * 1000);
-        Console.WriteLine($"Waited for {seconds} seconds.");
-        return seconds;
-    }
+}
+class PokeDTO
+{
+    [JsonPropertyName("id")]
+    public int ID { get; set; }
+    [JsonPropertyName("name")]
+    public string Name { get; set; }
+    [JsonPropertyName("types")]
+    public string[] Types { get; set; }
+    [JsonPropertyName("height")]
+    public int Height { get; set; }
+    [JsonPropertyName("weight")]
+    public int Weight { get; set; }
 }
