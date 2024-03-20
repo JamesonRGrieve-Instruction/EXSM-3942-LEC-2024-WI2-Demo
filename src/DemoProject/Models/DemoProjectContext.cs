@@ -13,6 +13,8 @@ public partial class DemoProjectContext : DbContext
     {
 
     }
+    public virtual DbSet<ExampleTable> ExampleTableRecords { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
