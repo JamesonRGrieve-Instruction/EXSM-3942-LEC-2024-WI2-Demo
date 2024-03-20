@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DemoProject.Models;
 
-public class DemoProjectContext : DbContext
+public partial class DemoProjectContext : DbContext
 {
     public DemoProjectContext()
     {
@@ -20,4 +20,9 @@ public class DemoProjectContext : DbContext
             optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=test;UID=root;PWD=;", new MariaDbServerVersion("10.4.28-MariaDB"));
         }
     }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        OnModelCreatingPartial(modelBuilder);
+    }
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
