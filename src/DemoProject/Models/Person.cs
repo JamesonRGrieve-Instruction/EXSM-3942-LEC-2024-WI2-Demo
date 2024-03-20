@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DemoProject.Models;
 
-[Table("example_table")]
-public class ExampleTable
+[Table("person")]
+public class Person
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

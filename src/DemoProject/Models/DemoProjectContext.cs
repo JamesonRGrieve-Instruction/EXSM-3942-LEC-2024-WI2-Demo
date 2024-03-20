@@ -13,7 +13,9 @@ public partial class DemoProjectContext : DbContext
     {
 
     }
-    public virtual DbSet<ExampleTable> ExampleTableRecords { get; set; }
+    public virtual DbSet<Person> People { get; set; }
+    public virtual DbSet<Job> Jobs { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
