@@ -14,4 +14,11 @@ public class Person
     public string FirstName { get; set; } = "";
     [Column("last_name", TypeName = "varchar(30)")]
     public string LastName { get; set; } = "";
+
+    [Column("job_id", TypeName = "int(10)")]
+    public int JobID { get; set; }
+
+    [ForeignKey(nameof(JobID))]
+    [InverseProperty(nameof(Models.Job.People))]
+    public virtual Job Job { get; set; }
 }

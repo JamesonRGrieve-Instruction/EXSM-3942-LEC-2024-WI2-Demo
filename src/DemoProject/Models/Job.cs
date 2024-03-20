@@ -12,4 +12,7 @@ public class Job
     public int ID { get; set; }
     [Column("name", TypeName = "varchar(30)")]
     public string Name { get; set; } = "";
+
+    [InverseProperty(nameof(Person.Job))]
+    public virtual ICollection<Person> People { get; set; }
 }

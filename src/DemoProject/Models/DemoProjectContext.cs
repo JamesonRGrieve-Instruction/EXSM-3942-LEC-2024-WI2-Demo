@@ -26,6 +26,17 @@ public partial class DemoProjectContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Person>(entity =>
+        {
+            entity.HasOne(child => child.Job)
+                .WithMany(parent => parent.People)
+                .HasForeignKey(child => child.JobID)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName($"FK_{nameof(Person)}_{nameof(Job)}");
+
+            entity.HasIndex(entity => entity.JobID)
+                .HasDatabaseName($"FK_{nameof(Person)}_{nameof(Job)}");
+        });
         OnModelCreatingPartial(modelBuilder);
     }
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
