@@ -37,7 +37,7 @@ namespace DemoProject.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("job");
+                    b.ToTable("job", (string)null);
                 });
 
             modelBuilder.Entity("DemoProject.Models.Person", b =>
@@ -68,7 +68,7 @@ namespace DemoProject.Migrations
                     b.HasIndex("JobID")
                         .HasDatabaseName("FK_Person_Job");
 
-                    b.ToTable("person");
+                    b.ToTable("person", (string)null);
                 });
 
             modelBuilder.Entity("DemoProject.Models.Person", b =>

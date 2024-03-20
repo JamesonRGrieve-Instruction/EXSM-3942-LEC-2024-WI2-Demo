@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
+using DotNetEnv;
+using System.Diagnostics;
+using System.Reflection;
 namespace DemoProject.Models;
 
 public partial class DemoProjectContext : DbContext
@@ -19,9 +21,30 @@ public partial class DemoProjectContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        Env.Load("../../../.env");
+
+        string envDBType = Environment.GetEnvironmentVariable("DB_TYPE") ?? "";
+
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=test;UID=root;PWD=;", new MariaDbServerVersion("10.4.28-MariaDB"));
+            if (envDBType.Trim().ToLower() == "mariadb" || envDBType.Trim().ToLower() == "mysql")
+            {
+                optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=test;UID=root;PWD=;", new MariaDbServerVersion("10.4.28-MariaDB"));
+            }
+            else if (envDBType.Trim().ToLower() == "postgres")
+            {
+                optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=postgres;UID=postgres;PWD=password");
+            }
+            else
+            {
+                string dbName = "example.db";
+                string exactPath = Path.Combine(Directory.GetCurrentDirectory(), dbName);
+                if (!File.Exists(exactPath))
+                {
+                    File.Create(exactPath).Close();
+                }
+                optionsBuilder.UseSqlite($"Filename={dbName};");
+            }
         }
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
