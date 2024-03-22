@@ -8,9 +8,9 @@ public class Job
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [Column("id", TypeName = "int(10)")]
+    [Column("id")]
     public int ID { get; set; }
-    [Column("name", TypeName = "varchar(30)")]
+    [Column("name")]
     public string Name { get; set; } = "";
 
     [InverseProperty(nameof(Person.Job))]

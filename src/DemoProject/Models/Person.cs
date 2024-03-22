@@ -8,14 +8,14 @@ public class Person
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [Column("id", TypeName = "int(10)")]
+    [Column("id")]
     public int ID { get; set; }
     [Column("first_name", TypeName = "varchar(30)")]
     public string FirstName { get; set; } = "";
     [Column("last_name", TypeName = "varchar(30)")]
     public string LastName { get; set; } = "";
 
-    [Column("job_id", TypeName = "int(10)")]
+    [Column("job_id")]
     public int JobID { get; set; }
 
     [ForeignKey(nameof(JobID))]
