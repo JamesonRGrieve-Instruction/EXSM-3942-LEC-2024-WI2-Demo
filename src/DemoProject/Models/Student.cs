@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DemoProject.Models;
 
-[Table("person")]
-public class Person
+[Table("student")]
+public class Student
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,10 +15,10 @@ public class Person
     [Column("last_name", TypeName = "varchar(30)")]
     public string LastName { get; set; } = "";
 
-    [Column("job_id")]
-    public int JobID { get; set; }
+    [Column("class_id")]
+    public int ClassID { get; set; }
 
-    [ForeignKey(nameof(JobID))]
-    [InverseProperty(nameof(Models.Job.People))]
-    public virtual Job Job { get; set; }
+    [ForeignKey(nameof(ClassID))]
+    [InverseProperty(nameof(Models.ClassRoom.Students))]
+    public virtual ClassRoom ClassRoom { get; set; }
 }
