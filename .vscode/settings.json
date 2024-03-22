@@ -1,0 +1,40 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MariaDB",
+      "name": "XAMPP",
+      "username": "root",
+      "database": "test",
+      "password": ""
+    },
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "database": "C:\\Users\\Jameson\\Desktop\\example.db",
+      "name": "SQLite"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "Postgre",
+      "database": "postgres",
+      "username": "postgres",
+      "password": "password"
+    },
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "This Example",
+      "database": "${workspaceFolder:demo-csharp}/src/DemoProject/example.db"
+    }
+  ]
+}
