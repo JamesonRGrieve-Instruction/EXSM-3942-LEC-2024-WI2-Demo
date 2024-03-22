@@ -15,8 +15,8 @@ public partial class DemoProjectContext : DbContext
     {
 
     }
-    public virtual DbSet<Person> People { get; set; }
-    public virtual DbSet<Job> Jobs { get; set; }
+    public virtual DbSet<Student> Students { get; set; }
+    public virtual DbSet<ClassRoom> ClassRooms { get; set; }
 
 
     public static void LoadEnvironment()
@@ -71,40 +71,40 @@ public partial class DemoProjectContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Job>(entity =>
+        modelBuilder.Entity<ClassRoom>(entity =>
         {
             entity.HasData([
-                new Job() {
+                new ClassRoom() {
                     ID = -1,
-                    Name = "Bus Driver"
+                    RoomNumber = 101
                 }
             ]);
         });
 
-        modelBuilder.Entity<Person>(entity => // A Person
+        modelBuilder.Entity<Student>(entity => // A Student
         {
-            entity.HasOne(child => child.Job) // Has One Job
-                .WithMany(parent => parent.People) // With Many People
-                .HasForeignKey(child => child.JobID)
+            entity.HasOne(child => child.ClassRoom) // Has One ClassRoom
+                .WithMany(parent => parent.Students) // With Many Students
+                .HasForeignKey(child => child.ClassID)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(Person)}_{nameof(Job)}");
+                .HasConstraintName($"FK_{nameof(Student)}_{nameof(ClassRoom)}");
 
-            entity.HasIndex(entity => entity.JobID)
-                .HasDatabaseName($"FK_{nameof(Person)}_{nameof(Job)}");
+            entity.HasIndex(entity => entity.ClassID)
+                .HasDatabaseName($"FK_{nameof(Student)}_{nameof(ClassRoom)}");
 
             entity.HasData(
                 [
-                    new Person() {
+                    new Student() {
                         ID = -1,
                         FirstName = "John",
                         LastName = "Doe",
-                        JobID = -1
+                        ClassID = -1
                     },
-                    new Person() {
+                    new Student() {
                         ID = -2,
                         FirstName = "Jane",
                         LastName = "Doe",
-                        JobID = -1
+                        ClassID = -1
                     },
                 ]
             );

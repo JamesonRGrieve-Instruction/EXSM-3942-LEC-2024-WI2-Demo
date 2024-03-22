@@ -20,5 +20,5 @@ public class Student
 
     [ForeignKey(nameof(ClassID))]
     [InverseProperty(nameof(Models.ClassRoom.Students))]
-    public virtual ClassRoom ClassRoom { get; set; }
+    public virtual ClassRoom? ClassRoom { get; set; }
 }
