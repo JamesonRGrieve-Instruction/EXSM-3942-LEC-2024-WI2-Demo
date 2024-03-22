@@ -41,19 +41,21 @@ public partial class DemoProjectContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         LoadEnvironment();
-        string envDBType = Environment.GetEnvironmentVariable("DB_TYPE") ?? "";
+        string envDBType = Environment.GetEnvironmentVariable("DB_TYPE") ?? "",
+        envDBHost = Environment.GetEnvironmentVariable("DB_HOST") ?? "",
+        envDBName = Environment.GetEnvironmentVariable("DB_NAME") ?? "",
+        envMariaDBUser = Environment.GetEnvironmentVariable("MARIADB_USERNAME") ?? "",
+        envMariaDBPassword = Environment.GetEnvironmentVariable("MARIADB_PASSWORD") ?? "";
 
         if (!optionsBuilder.IsConfigured)
         {
             if (envDBType.Trim().ToLower() == "mariadb" || envDBType.Trim().ToLower() == "mysql")
             {
-                optionsBuilder.UseMySql($"Server={Environment.GetEnvironmentVariable("DB_HOST") ?? ""};" +
-                    $"Port=3306;" +
-                    $"Database={Environment.GetEnvironmentVariable("DB_NAME") ?? ""};UID=root;PWD=;", new MariaDbServerVersion("10.4.28-MariaDB"));
+                optionsBuilder.UseMySql($"Server={envDBHost};Port=3306;Database={envDBName};UID={envMariaDBUser};PWD={envMariaDBPassword};", new MariaDbServerVersion("10.4.28-MariaDB"));
             }
             else if (envDBType.Trim().ToLower() == "postgres")
             {
-                optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=postgres;UID=postgres;PWD=password");
+                optionsBuilder.UseNpgsql($"Server={envDBHost};Port=5432;Database={envDBName};UID=postgres;PWD=password");
             }
             else
             {

@@ -14,5 +14,5 @@ public class ClassRoom
     public int RoomNumber { get; set; }
 
     [InverseProperty(nameof(Student.ClassRoom))]
-    public virtual ICollection<Student> Students { get; set; }
+    public virtual ICollection<Student>? Students { get; set; }
 }
