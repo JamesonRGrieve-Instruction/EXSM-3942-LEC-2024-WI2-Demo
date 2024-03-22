@@ -2,17 +2,17 @@
 using DemoProject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace DemoProject.Migrations
 {
     [DbContext(typeof(DemoProjectContext))]
-    [Migration("20240322012607_FullMigrationWithSeedData")]
-    partial class FullMigrationWithSeedData
+    [Migration("20240322014356_StudentClassRoomMigration")]
+    partial class StudentClassRoomMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,53 +20,52 @@ namespace DemoProject.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("DemoProject.Models.Job", b =>
+            modelBuilder.Entity("DemoProject.Models.ClassRoom", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int")
+                        .HasColumnName("room_number");
 
                     b.HasKey("ID");
 
-                    b.ToTable("job");
+                    b.ToTable("classroom");
 
                     b.HasData(
                         new
                         {
                             ID = -1,
-                            Name = "Bus Driver"
+                            RoomNumber = 101
                         });
                 });
 
-            modelBuilder.Entity("DemoProject.Models.Person", b =>
+            modelBuilder.Entity("DemoProject.Models.Student", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("ClassID")
+                        .HasColumnType("int")
+                        .HasColumnName("class_id");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("varchar(30)")
                         .HasColumnName("first_name");
-
-                    b.Property<int>("JobID")
-                        .HasColumnType("integer")
-                        .HasColumnName("job_id");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -75,43 +74,43 @@ namespace DemoProject.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("JobID")
-                        .HasDatabaseName("FK_Person_Job");
+                    b.HasIndex("ClassID")
+                        .HasDatabaseName("FK_Student_ClassRoom");
 
-                    b.ToTable("person");
+                    b.ToTable("student");
 
                     b.HasData(
                         new
                         {
                             ID = -1,
+                            ClassID = -1,
                             FirstName = "John",
-                            JobID = -1,
                             LastName = "Doe"
                         },
                         new
                         {
                             ID = -2,
+                            ClassID = -1,
                             FirstName = "Jane",
-                            JobID = -1,
                             LastName = "Doe"
                         });
                 });
 
-            modelBuilder.Entity("DemoProject.Models.Person", b =>
+            modelBuilder.Entity("DemoProject.Models.Student", b =>
                 {
-                    b.HasOne("DemoProject.Models.Job", "Job")
-                        .WithMany("People")
-                        .HasForeignKey("JobID")
+                    b.HasOne("DemoProject.Models.ClassRoom", "ClassRoom")
+                        .WithMany("Students")
+                        .HasForeignKey("ClassID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("FK_Person_Job");
+                        .HasConstraintName("FK_Student_ClassRoom");
 
-                    b.Navigation("Job");
+                    b.Navigation("ClassRoom");
                 });
 
-            modelBuilder.Entity("DemoProject.Models.Job", b =>
+            modelBuilder.Entity("DemoProject.Models.ClassRoom", b =>
                 {
-                    b.Navigation("People");
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

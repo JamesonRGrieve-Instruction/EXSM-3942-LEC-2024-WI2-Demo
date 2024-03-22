@@ -77,7 +77,12 @@ public partial class DemoProjectContext : DbContext
                 new ClassRoom() {
                     ID = -1,
                     RoomNumber = 101
-                }
+                },
+                new ClassRoom() {
+                    ID = -2,
+                    RoomNumber = 102
+                },
+
             ]);
         });
 
@@ -105,6 +110,30 @@ public partial class DemoProjectContext : DbContext
                         FirstName = "Jane",
                         LastName = "Doe",
                         ClassID = -1
+                    },
+                    new Student() {
+                        ID = -3,
+                        FirstName = "Tom",
+                        LastName = "Doe",
+                        ClassID = -1
+                    },
+                    new Student() {
+                        ID = -4,
+                        FirstName = "Bob",
+                        LastName = "Doe",
+                        ClassID = -2
+                    },
+                    new Student() {
+                        ID = -5,
+                        FirstName = "Joe",
+                        LastName = "Doe",
+                        ClassID = -2
+                    },
+                    new Student() {
+                        ID = -6,
+                        FirstName = "Paul",
+                        LastName = "Doe",
+                        ClassID = -2
                     },
                 ]
             );
