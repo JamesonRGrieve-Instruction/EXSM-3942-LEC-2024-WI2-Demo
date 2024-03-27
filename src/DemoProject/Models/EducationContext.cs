@@ -50,7 +50,7 @@ public partial class EducationContext : DbContext
                     Code = "EXSM3931",
                     Name = "Introduction to Web Development",
                     ProgramId = -1
-                }
+                },
             ]);
         });
 
@@ -68,7 +68,7 @@ public partial class EducationContext : DbContext
                     StudentId = -1,
                     SectionId = -1,
                     Grade = null
-                }
+                },
             ]);
         });
 
@@ -80,7 +80,7 @@ public partial class EducationContext : DbContext
                 new Program() {
                     Id = -1,
                     Name = "Fullstack Web Application Development",
-                }
+                },
             ]);
         });
 
@@ -99,7 +99,7 @@ public partial class EducationContext : DbContext
                     SemesterId = -1,
                     DaysOffered = "MR",
                     TimeOffered = new TimeOnly(19, 0)
-                }
+                },
             ]);
         });
 
@@ -113,7 +113,7 @@ public partial class EducationContext : DbContext
                     Name = "Winter 2024",
                     StartDate = new DateOnly(2024, 1, 8),
                     EndDate = new DateOnly(2024, 4, 26)
-                }
+                },
             ]);
         });
 
@@ -127,7 +127,7 @@ public partial class EducationContext : DbContext
                     Firstname = "John",
                     Lastname = "Doe",
                     Birthdate = new DateOnly(1990,1,1)
-                }
+                },
             ]);
         });
 
