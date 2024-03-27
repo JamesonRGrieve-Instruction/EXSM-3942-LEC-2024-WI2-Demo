@@ -21,6 +21,9 @@ public partial class Enrollment
     [Column("section_id", TypeName = "int(11)")]
     public int? SectionId { get; set; }
 
+    [Column("grade", TypeName = "char(1)")]
+    public char? Grade { get; set; }
+
     [ForeignKey("SectionId")]
     [InverseProperty("Enrollments")]
     public virtual Section? Section { get; set; }
