@@ -21,10 +21,6 @@ public partial class Student
     [StringLength(100)]
     public string? Lastname { get; set; }
 
-    [Column("student_id")]
-    [StringLength(50)]
-    public string? StudentId { get; set; }
-
     [Column("birthdate")]
     public DateOnly? Birthdate { get; set; }
 
